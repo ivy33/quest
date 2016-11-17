@@ -1,0 +1,18 @@
+with 
+   DoneQuest(account_name, avatar_name, quest) as (
+    select V.account_name, V.avatar_name, P.quest
+    from Visit V, Plays P
+    where V.account_name = P.account_name
+  	and V.day = P.day and V.Realm = P.realm
+  ),
+  
+  Finito(player_name, account_name, avatar_name, quest) as(
+  select A.name, A.login, DoneQuest.avatar_name, DoneQuest.quest
+  from Account A join DoneQuest
+  on A.login = DoneQuest.account_name
+  )
+
+
+select distinct F.account_name as Login, F.player_name as Player, F.avatar_name as avatar, count(*) as #Quests
+from Finito F
+group by F.account_name, F.player_name, F.avatar_name;

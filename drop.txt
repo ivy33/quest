@@ -1,0 +1,7 @@
+drop table AVATAR;
+drop table ACCOUNT;
+drop table LOOK;
+drop table PLAYS;
+drop table QUEST;
+drop table REALM;
+drop table VISIT;

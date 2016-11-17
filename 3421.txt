@@ -1,0 +1,58 @@
+create table account ( 
+login varchar(15) not null, 
+name varchar(15) not null, 
+address varchar(15) not null, 
+joined timestamp not null, 
+primary key(login) 
+);
+
+create table look (
+look varchar(15) not null,
+primary key(look)
+);
+
+create table avatar (
+account_name varchar(15) not null,
+name varchar(15) not null,
+gender varchar(1) not null,
+look varchar(15) not null,
+foreign key(account_name) references ACCOUNT(login),
+foreign key(look) references LOOK(look),
+primary key(account_name, name)
+);
+
+create table realm (
+realm varchar(15) not null,
+primary key(realm)
+);
+
+create table quest(
+quest varchar(15) not null,
+realm varchar(15) not null,
+day date not null,
+succeeded time,
+foreign key(realm) references REALM(realm),
+primary key(quest, day, realm)
+);
+
+create table visit(
+account_name varchar(15) not null,
+avatar_name varchar(15) not null,
+realm varchar(15) not null,
+day date not null,
+foreign key(account_name, avatar_name references avatar(account_name, name),
+foreign key(realm) references realm(realm),
+primary key(account_name, realm, day)
+);
+
+create table plays(
+account_name varchar(15) not null,
+avatar_name varchar(15),
+realm varchar(15) not null,
+day date not null,
+quest varchar(15) not null,
+role varchar(15) not null,
+foreign key(account_name, realm, day) references Visit(account_name, realm, day),
+foreign key(quest, realm, day) references quest(quest, realm, day),
+primary key(account_name, quest, day)
+);
